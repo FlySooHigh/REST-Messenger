@@ -13,6 +13,11 @@ public class DatabaseStub {
     private static Map<Long, Message> messages = new HashMap<>();
     private static Map<Long, Profile> profiles = new HashMap<>();
 
+    static {
+        messages.put(1L, new Message(1L, "Message #1", "Alex"));
+        messages.put(2L, new Message(2L, "Message #2", "Alex"));
+    }
+
     public static Map<Long, Message> getMessages() {
         return messages;
     }

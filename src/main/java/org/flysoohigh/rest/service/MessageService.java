@@ -15,8 +15,6 @@ public class MessageService {
     private Map<Long, Message> messages = DatabaseStub.getMessages();
 
     public MessageService() {
-        messages.put(1L, new Message(1L, "Message #1", "Alex"));
-        messages.put(2L, new Message(2L, "Message #2", "Alex"));
     }
 
     public List<Message> getAllMessages() {
