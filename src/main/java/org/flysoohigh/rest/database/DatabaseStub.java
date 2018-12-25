@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created on 24.12.2018.
  */
-public class DatabaseClass {
+public class DatabaseStub {
     private static Map<Long, Message> messages = new HashMap<>();
     private static Map<Long, Profile> profiles = new HashMap<>();
 

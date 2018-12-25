@@ -1,6 +1,6 @@
 package org.flysoohigh.rest.service;
 
-import org.flysoohigh.rest.database.DatabaseClass;
+import org.flysoohigh.rest.database.DatabaseStub;
 import org.flysoohigh.rest.model.Message;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class MessageService {
 
-    private Map<Long, Message> messages = DatabaseClass.getMessages();
+    private Map<Long, Message> messages = DatabaseStub.getMessages();
 
     public MessageService() {
         messages.put(1L, new Message(1L, "Message #1", "Alex"));
