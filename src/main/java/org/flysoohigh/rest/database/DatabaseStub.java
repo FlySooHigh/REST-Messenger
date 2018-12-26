@@ -11,18 +11,20 @@ import java.util.Map;
  */
 public class DatabaseStub {
     private static Map<Long, Message> messages = new HashMap<>();
-    private static Map<Long, Profile> profiles = new HashMap<>();
+    private static Map<String, Profile> profiles = new HashMap<>();
 
     static {
         messages.put(1L, new Message(1L, "Message #1", "Alex"));
         messages.put(2L, new Message(2L, "Message #2", "Alex"));
+        profiles.put("Alex", new Profile(1L, "Alex", "Alexander", "Alexander"));
+        profiles.put("Serg", new Profile(2L, "Serg", "Sergey", "Sergey"));
     }
 
     public static Map<Long, Message> getMessages() {
         return messages;
     }
 
-    public static Map<Long, Profile> getProfiles() {
+    public static Map<String, Profile> getProfiles() {
         return profiles;
     }
 }

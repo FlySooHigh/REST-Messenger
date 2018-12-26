@@ -1,16 +1,21 @@
 package org.flysoohigh.rest.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 
 /**
  * Created on 24.12.2018.
  */
+@XmlRootElement
 public class Profile {
     private Long id;
     private String profileName;
     private String firstName;
     private String lastName;
     private LocalDateTime created;
+
+    public Profile() {
+    }
 
     public Profile(Long id, String profileName, String firstName, String lastName) {
         this.id = id;
@@ -50,5 +55,13 @@ public class Profile {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 }

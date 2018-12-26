@@ -32,7 +32,7 @@ public class MessageService {
     }
 
     public Message updateMessage(Message message) {
-        if (messages.size() <= 0) {
+        if (message.getId() <= 0) {
             return null;
         }
         messages.put(message.getId(), message);
