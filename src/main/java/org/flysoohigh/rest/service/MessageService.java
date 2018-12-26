@@ -42,4 +42,19 @@ public class MessageService {
     public Message removeMessage(long id) {
         return messages.remove(id);
     }
+
+    public List<Message> getFilteredByYear(int year) {
+        List<Message> filteredList = new ArrayList<>();
+        for (Message message : messages.values()) {
+            if (message.getDateTime().getYear() == year) {
+                filteredList.add(message);
+            }
+        }
+        return filteredList;
+    }
+
+    public List<Message> getPaginatedList(int start, int size) {
+        List<Message> fullMessageList = new ArrayList<>(this.messages.values());
+        return fullMessageList.subList(start, start + size);
+    }
 }
