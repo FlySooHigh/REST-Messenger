@@ -1,7 +1,10 @@
 package org.flysoohigh.rest.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created on 24.12.2018.
@@ -13,6 +16,7 @@ public class Message {
     private String message;
     private String author;
     private LocalDateTime dateTime;
+    private Map<Long, Comment> comments = new HashMap<>();
 
     public Message() {
     }
@@ -54,5 +58,14 @@ public class Message {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @XmlTransient
+    public Map<Long, Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Map<Long, Comment> comments) {
+        this.comments = comments;
     }
 }

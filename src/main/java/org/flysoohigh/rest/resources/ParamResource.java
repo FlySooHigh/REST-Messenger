@@ -19,7 +19,7 @@ public class ParamResource {
     @Path("/annotations")
     public String annotationsDemoMethod(@MatrixParam("matrix") String matrixValue,
                                         @HeaderParam("header") String headerValue,
-                                        @CookieParam("cookie") String cookieValue) {
+                                        @CookieParam("Cookie_3") String cookieValue) {
         return "Matrix param value: " + matrixValue + "\n"
                 + "Header param value: " + headerValue + "\n"
                 + "Cookie: " + cookieValue;

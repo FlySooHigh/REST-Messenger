@@ -1,5 +1,6 @@
 package org.flysoohigh.rest.database;
 
+import org.flysoohigh.rest.model.Comment;
 import org.flysoohigh.rest.model.Message;
 import org.flysoohigh.rest.model.Profile;
 
@@ -14,7 +15,12 @@ public class DatabaseStub {
     private static Map<String, Profile> profiles = new HashMap<>();
 
     static {
-        messages.put(1L, new Message(1L, "Message #1", "Alex"));
+        Message message1 = new Message(1L, "Message #1", "Alex");
+        HashMap<Long, Comment> comments = new HashMap<>();
+        comments.put(1L, new Comment(1L, "Comment#1 for message 1", "Alex123"));
+        comments.put(2L, new Comment(2L, "Comment#2 for message 1", "Alex123"));
+        message1.setComments(comments);
+        messages.put(1L, message1);
         messages.put(2L, new Message(2L, "Message #2", "Ivan"));
         messages.put(3L, new Message(3L, "Message #3", "Ant"));
         messages.put(4L, new Message(4L, "Message #4", "Serg"));
