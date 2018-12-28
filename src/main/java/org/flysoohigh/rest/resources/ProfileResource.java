@@ -4,7 +4,11 @@ import org.flysoohigh.rest.model.Profile;
 import org.flysoohigh.rest.service.ProfileService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -30,8 +34,13 @@ public class ProfileResource {
     }
 
     @POST
-    public Profile addProfile(Profile profile) {
-        return profileService.addProfile(profile);
+    public Response addProfile(Profile profile, @Context UriInfo uriInfo) {
+        Profile newProfile = profileService.addProfile(profile);
+        String newProfileId = String.valueOf(newProfile.getId());
+        URI uri = uriInfo.getAbsolutePathBuilder().path(newProfileId).build();
+        return Response.created(uri)
+                       .entity(newProfile)
+                       .build();
     }
 
     @PUT

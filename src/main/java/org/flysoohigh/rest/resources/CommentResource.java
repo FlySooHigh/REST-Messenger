@@ -4,7 +4,11 @@ import org.flysoohigh.rest.model.Comment;
 import org.flysoohigh.rest.service.CommentService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -17,20 +21,6 @@ import java.util.List;
 public class CommentResource {
 
     private CommentService commentService = new CommentService();
-
-//    @GET
-//    @Produces(MediaType.TEXT_PLAIN)
-//    public String test() {
-//        return "hello from sub-resource";
-//    }
-//
-//    @GET
-//    @Path("{commentId}")
-//    public String anotherTest(@PathParam("commentId") long commentId,
-//                              @PathParam("messageId") long messageId) {
-//        return "Comment id: " + commentId + "\n"
-//                + "Message id: " + messageId;
-//    }
 
     @GET
     public List<Comment> getComments(@PathParam("messageId") long messageId) {
@@ -45,10 +35,15 @@ public class CommentResource {
     }
 
     @POST
-//  "{messageId}/comments"
-    public Comment addComment(@PathParam("messageId") long messageId,
-                              Comment comment) {
-        return commentService.addComment(messageId, comment);
+    public Response addComment(@PathParam("messageId") long messageId,
+                               @Context UriInfo uriInfo,
+                               Comment comment) {
+        Comment newComment = commentService.addComment(messageId, comment);
+        String newCommentId = String.valueOf(newComment.getId());
+        URI uri = uriInfo.getAbsolutePathBuilder().path(newCommentId).build();
+        return Response.created(uri)
+                       .entity(newComment)
+                       .build();
     }
 
     @PUT

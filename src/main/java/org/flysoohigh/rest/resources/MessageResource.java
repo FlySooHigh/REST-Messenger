@@ -4,7 +4,11 @@ import org.flysoohigh.rest.model.Message;
 import org.flysoohigh.rest.service.MessageService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 
 @Path("/messages")
@@ -34,8 +38,13 @@ public class MessageResource {
     }
 
     @POST
-    public Message addMessage(Message message) {
-        return messageService.addMessage(message);
+    public Response addMessage(Message message, @Context UriInfo uriInfo) {
+        Message newMessage = messageService.addMessage(message);
+        String newMessageId = String.valueOf(newMessage.getId());
+        URI uri = uriInfo.getAbsolutePathBuilder().path(newMessageId).build();
+        return Response.created(uri)
+                       .entity(newMessage)
+                       .build();
     }
 
     @PUT
