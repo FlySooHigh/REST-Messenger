@@ -1,6 +1,7 @@
 package org.flysoohigh.rest.service;
 
 import org.flysoohigh.rest.database.DatabaseStub;
+import org.flysoohigh.rest.exceptions.DataNotFoundException;
 import org.flysoohigh.rest.model.Message;
 
 import java.util.ArrayList;
@@ -28,6 +29,10 @@ public class MessageService {
     }
 
     public Message getMessage(long id) {
+        Message message = messages.get(id);
+        if (message == null) {
+            throw new DataNotFoundException("Message with id: " + id + " not found.");
+        }
         return messages.get(id);
     }
 
