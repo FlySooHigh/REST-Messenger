@@ -4,10 +4,7 @@ import org.flysoohigh.rest.model.Message;
 import org.flysoohigh.rest.service.MessageService;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.List;
 
@@ -33,8 +30,39 @@ public class MessageResource {
 
     @GET
     @Path("/{messageId}")
-    public Message getMessage(@PathParam("messageId") long id) {
-        return messageService.getMessage(id);
+    public Message getMessage(@PathParam("messageId") long id,
+                              @Context UriInfo uriInfo) {
+        Message message = messageService.getMessage(id);
+        if (message.getLinks().size() == 0) {
+            message.addLink(getSelfUri(uriInfo, message), "self");
+            message.addLink(getProfileUri(uriInfo, message), "profile");
+            message.addLink(getProfileComments(uriInfo, message), "comments");
+        }
+        return message;
+    }
+
+    private String getProfileComments(UriInfo uriInfo, Message message) {
+        return uriInfo.getBaseUriBuilder()
+                      .path(MessageResource.class)
+                      .path(MessageResource.class, "getCommentResource")
+                      .path(CommentResource.class)
+                      .resolveTemplate("messageId", message.getId())
+                      .build()
+                      .toString();
+    }
+
+    private String getProfileUri(UriInfo uriInfo, Message message) {
+        return uriInfo.getBaseUriBuilder()
+                      .path(ProfileResource.class)
+                      .path(message.getAuthor())
+                      .toString();
+    }
+
+    private String getSelfUri(@Context UriInfo uriInfo, Message message) {
+        return uriInfo.getBaseUriBuilder()
+                      .path(MessageResource.class)
+                      .path(String.valueOf(message.getId()))
+                      .toString();
     }
 
     @POST
